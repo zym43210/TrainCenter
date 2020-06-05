@@ -1,0 +1,318 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="TrainCenter.Repositories.EFAbonementRepository" Collapsed="true">
+    <Position X="0.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAQAAAAgAAAAQAAAAAAAAAAAAAAAAoCAAA=</HashCode>
+      <FileName>Repositories\EFAbonementRepository.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="TrainCenter.Repositories.EFUserRepository" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="4" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAgAAIAAAQAAAAAAAAAABAAAiAIHAAA=</HashCode>
+      <FileName>Repositories\EFUserRepository.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="TrainCenter.Repositories.EFTrainProgramRepository" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="2.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAgAAAAQAAAAAABAAAAAAAAAIGAAA=</HashCode>
+      <FileName>Repositories\EFTrainProgramRepository.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="TrainCenter.Repositories.EFVisitingRepository" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="5.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAQAAAAAAAAABAAAAAAICAAA=</HashCode>
+      <FileName>Repositories\EFVisitingRepository.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="TrainCenter.Model.TrainCenterEntities2" Collapsed="true">
+    <Position X="2" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAASAAAAAAAAAAAAAAAACAEAAAAAAAAAAAEAAAAEA=</HashCode>
+      <FileName>Model\Model1.Context.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TrainCenter.Model.Abonement" Collapsed="true">
+    <Position X="0.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAAAAAAAAAEAAAAAACgAAAAAQAAAAAAAAAAAgA=</HashCode>
+      <FileName>Model\Abonement.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TrainCenter.Model.TrainProgram" Collapsed="true">
+    <Position X="2.25" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABACAAAAAAAEAEAAAAAAAAIAAgAAAAAAAACAAAAgA=</HashCode>
+      <FileName>Model\TrainProgram.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TrainCenter.Model.User" Collapsed="true">
+    <Position X="4" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAIIUgAAABIAAEEKAABAAQIkAIAAAgDCABEA0CAAkE=</HashCode>
+      <FileName>Model\User.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TrainCenter.Model.Visiting" Collapsed="true">
+    <Position X="5.75" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACEAAAAIAAAAAAAABAAAAAAIAAgAAAAAAAAAAAAAgA=</HashCode>
+      <FileName>Model\Visiting.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TrainCenter.App" Collapsed="true">
+    <Position X="8.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAgAAAAAAAAAAAQAAAAAAAABAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>App.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TrainCenter.Properties.Settings" Collapsed="true">
+    <Position X="8.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAIAAAAAABAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TrainCenter.Properties.Resources" Collapsed="true">
+    <Position X="8.75" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAABEAAAAQAAAAAAAAAAAAAAAIA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TrainCenter.View.AddMyTrainWindow" Collapsed="true">
+    <Position X="0.5" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAghAAAAABA=</HashCode>
+      <FileName>View\AddMyTrainWindow.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="TrainCenter.ViewModel.AddMyTrainWindowViewModel" Collapsed="true">
+    <Position X="2.25" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IACAAAAABAAAAAAAIBAgACAQoAAgQBIAQAAAAEBBAAA=</HashCode>
+      <FileName>ViewModel\AddMyTrainWindowViewModel.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="TrainCenter.View.AdminPage" Collapsed="true">
+    <Position X="0.5" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAQQAAAAAAAAAAgAAAAAAAAAAIAAAAAEAAAAAA=</HashCode>
+      <FileName>View\AdminPage.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="TrainCenter.View.AlertWindow" Collapsed="true">
+    <Position X="0.5" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAABIAAAAAA=</HashCode>
+      <FileName>View\AlertWindow.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="TrainCenter.View.AllTrainings" Collapsed="true">
+    <Position X="0.5" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAIAAAAAAAAIAAAQAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>View\AllTrainings.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="TrainCenter.View.AuthWindow" Collapsed="true">
+    <Position X="0.5" Y="8.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAIAAAAAAAACAAACAAAAEAAABABCAAAAAAABAAA=</HashCode>
+      <FileName>View\AuthWindow.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="TrainCenter.View.DialogWindow" Collapsed="true">
+    <Position X="0.5" Y="9.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAIAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAA=</HashCode>
+      <FileName>View\DialogWindow.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="TrainCenter.ViewModel.AdminPageViewModel" Collapsed="true">
+    <Position X="2.25" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIQAASAAAAAAAAREJAAAAEKggAEAAAIAABAAIIARAGA=</HashCode>
+      <FileName>ViewModel\AdminPageViewModel.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="TrainCenter.ViewModel.AllTrainProgramViewModel" Collapsed="true">
+    <Position X="2.25" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AISAAAAghCAAYAAAJAAAAAQCgCAEkAAFQJAIAcAwCEE=</HashCode>
+      <FileName>ViewModel\AllTrainingsViewModel.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="TrainCenter.ViewModel.AuthWindowViewModel" Collapsed="true">
+    <Position X="2.25" Y="8.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAQAAAAAAAAAAAIAAAAAAAgAAAAAACQAAQAkAAEgA=</HashCode>
+      <FileName>ViewModel\AuthWindowViewModel.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="TrainCenter.View.GiveAbonementsPage" Collapsed="true">
+    <Position X="4.5" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAABAAEAAAAAAAQAAAAAA=</HashCode>
+      <FileName>View\GiveAbonementsPage.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="TrainCenter.View.GiveTrainProgramPage" Collapsed="true">
+    <Position X="4.5" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAEAAAAAAAABAAAAAAAAAAQAAAAAA=</HashCode>
+      <FileName>View\GiveTrainProgramPage.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="TrainCenter.View.MainWindow" Collapsed="true">
+    <Position X="4.5" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAAAAAADAAAAAAAAAAAAAAAEAAAABAQAAAEAAABAAA=</HashCode>
+      <FileName>View\MainWindow.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="TrainCenter.View.MyStatusPage" Collapsed="true">
+    <Position X="4.5" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>View\MyStatusPage.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="TrainCenter.View.PersonAreaPage" Collapsed="true">
+    <Position X="4.5" Y="8.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAABAAABAAA=</HashCode>
+      <FileName>View\PersonAreaPage.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="TrainCenter.View.RegistrationWindow" Collapsed="true">
+    <Position X="4.5" Y="9.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAAAAEAAAAAAEAgBAAAAABAACAAEAAAABQAk=</HashCode>
+      <FileName>View\RegistrationWindow.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="TrainCenter.View.UserViewWindow" Collapsed="true">
+    <Position X="4.5" Y="10.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAABAAAAAIAAAAAAAAAAAAAAAAAQAAAAAAQAAAAAA=</HashCode>
+      <FileName>View\UserViewWindow.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="TrainCenter.View.ViewWindow" Collapsed="true">
+    <Position X="4.5" Y="11.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAQAAAAAAAAAAAIAAAIAAAABAAAAAAAAABAAAAABA=</HashCode>
+      <FileName>View\ViewWindow.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="TrainCenter.ViewModel.GiveAbonementsPageViewModel" Collapsed="true">
+    <Position X="6.25" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IEgAAQEAAAAAAAAAICAAAACggAAAQAAAQBYAAcABABE=</HashCode>
+      <FileName>ViewModel\GiveAbonementsPageViewModel.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="TrainCenter.ViewModel.GiveTrainProgramPageViewModel" Collapsed="true">
+    <Position X="6.25" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IECAAQAAQAAAAEQAIAAgAiCAoEAgQAAIQBYACcAAABE=</HashCode>
+      <FileName>ViewModel\GIveTrainProgramPageViewModel.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="TrainCenter.ViewModel.MainWindowViewModel" Collapsed="true">
+    <Position X="6.25" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQCAAAAAgAAAAAAKAAAAAgggAEAgAAAAYAAAAEAAAA=</HashCode>
+      <FileName>ViewModel\MainWindowViewModel.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="TrainCenter.ViewModel.MyStatusPageViewModel" Collapsed="true">
+    <Position X="6.25" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgQAAQAAAAAAAAAAIAAAAACAgAAIAEIAQBAQAEABAgA=</HashCode>
+      <FileName>ViewModel\MyStatusPageViewModel.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="TrainCenter.ViewModel.PersonAreaViewModel" Collapsed="true">
+    <Position X="6.25" Y="8.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAIIEgAAABAAAUEIAABIAAIgAAIAAoBCAAAIYABgSE=</HashCode>
+      <FileName>ViewModel\PersonAreaViewModel.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="TrainCenter.ViewModel.RegistrationViewModel" Collapsed="true">
+    <Position X="6.25" Y="9.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEgAAABAAAAAIAAAAAAAgAAAAAACSAAAA8AEAAE=</HashCode>
+      <FileName>ViewModel\RegistrationViewModel.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="TrainCenter.ViewModel.UserViewWindowViewModel" Collapsed="true">
+    <Position X="6.25" Y="10.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAIAAAQAAAAEEAIAQBAAYMgAAGAAABAAAAAAAAAAA=</HashCode>
+      <FileName>ViewModel\UserViewWindowViewModel.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Interface Name="TrainCenter.Repositories.IAbonementRepository" Collapsed="true">
+    <Position X="0.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAQAAAAgAAAAQAAAAAAAAAAAAAAAAoCAAA=</HashCode>
+      <FileName>Repositories\IAbonementRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="TrainCenter.Repositories.ITrainProgramRepository" Collapsed="true">
+    <Position X="2.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAgAAAAQAAAAAABAAAAAAAAAICAAA=</HashCode>
+      <FileName>Repositories\ITrainProgramRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="TrainCenter.Repositories.IUserRepository" Collapsed="true">
+    <Position X="4" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAgAAIAAAAAAAAAAAAAABAAAgAIHAAA=</HashCode>
+      <FileName>Repositories\IUserRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="TrainCenter.Repositories.IVisitingRepository" Collapsed="true">
+    <Position X="5.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAQAAAAAAAAABAAAAAAICAAA=</HashCode>
+      <FileName>Repositories\IVisitingRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

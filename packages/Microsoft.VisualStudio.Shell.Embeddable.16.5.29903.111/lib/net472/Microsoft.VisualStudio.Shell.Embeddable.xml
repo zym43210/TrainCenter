@@ -1,0 +1,486 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Microsoft.VisualStudio.Shell.Embeddable</name>
+    </assembly>
+    <members>
+        <member name="T:Microsoft.VisualStudio.Shell.IVsProjectSecrets">
+            <summary>
+            An interface implemented by a project system to store secrets
+            that the application this project builds can access at runtime.
+            </summary>
+            <remarks>
+            <para>
+            An implementation of this interface may be obtained by calling
+            IVsProject.GetItemContext(VSConstants.VSITEMID_Root, out IServiceProvider sp)
+            and querying the resulting IServiceProvider for the service that implements this interface.
+            Multiple services that implement this interface may be defined, each representing a different
+            persistent store of secrets (e.g. secrets.json, appsettings.json, Key Vault).
+            This interface itself should <em>not</em> be proffered as a the service type/ID to avoid confusion
+            between the different sources.
+            If a particular storage system may apply to multiple files in the project, this service <em>may</em>
+            be found by calling IVsProject.GetItemContext passing in the ITEMID for one of those represented files.
+            </para>
+            <para>
+            Implementations are expected to be free-threaded and thread-safe.
+            </para>
+            </remarks>
+        </member>
+        <member name="M:Microsoft.VisualStudio.Shell.IVsProjectSecrets.SanitizeName(System.String)">
+            <summary>
+            Replaces any disallowed characters from the proposed secret name with an allowed substitution character.
+            For example, if `:` is not an allowed secret name character, this method might replace use of that character
+            with an underscore (‘_’).
+            </summary>
+            <param name="name">The candidate name for the secret. Must not be <c>null</c>, but may be empty.</param>
+            <returns>The sanitized name to use for the secret.</returns>
+            <exception cref="T:System.ArgumentNullException">Thrown if <paramref name="name"/> is <c>null</c>.</exception>
+        </member>
+        <member name="M:Microsoft.VisualStudio.Shell.IVsProjectSecrets.GetInvalidCharactersFrom(System.String)">
+            <summary>
+            Gets the set of distinct characters from the proposed secret name that would be disallowed.
+            </summary>
+            <param name="name">The candidate name for the secret. Must not be <c>null</c>, but may be empty.</param>
+            <returns>The set of characters found in <paramref name="name"/> that are reserved and not allowed for use.</returns>
+            <exception cref="T:System.ArgumentNullException">Thrown if <paramref name="name"/> is <c>null</c>.</exception>
+        </member>
+        <member name="M:Microsoft.VisualStudio.Shell.IVsProjectSecrets.AddSecretAsync(System.String,System.String,System.Threading.CancellationToken)">
+            <summary>
+            Adds a secret with the given name so the application built by this project can access it at runtime.
+            </summary>
+            <param name="name">The name of the secret. Must not be <c>null</c> or empty.</param>
+            <param name="value">The secret itself.</param>
+            <param name="cancellationToken">A token that may cancel this operation.</param>
+            <returns>A task that represents the asynchronous store operation.</returns>
+            <exception cref="T:System.ArgumentNullException">Thrown if <paramref name="name"/> is <c>null</c>.</exception>
+            <exception cref="T:System.ArgumentException">Thrown if <paramref name="name"/> is empty, contains reserved characters that <see cref="M:Microsoft.VisualStudio.Shell.IVsProjectSecrets.GetInvalidCharactersFrom(System.String)"/> would have indicated were disallowed, or collides with the name of an existing secret.</exception>
+            <exception cref="T:System.InvalidOperationException">Thrown when integrity rules would be violated by this operation.</exception>
+            <exception cref="T:System.UnauthorizedAccessException">Thrown when the user does not have permission for this operation.</exception>
+            <exception cref="T:System.IO.IOException">Thrown when the operation could not be completed due to some network or I/O failure.</exception>
+            <remarks>
+            If a secret with the specified name already exists, an <see cref="T:System.ArgumentException"/> is thrown.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.VisualStudio.Shell.IVsProjectSecrets.SetSecretAsync(System.String,System.String,System.Threading.CancellationToken)">
+            <summary>
+            Adds or updates a secret with the given name so the application built by this project can access it at runtime.
+            </summary>
+            <param name="name">The name of the secret. Must not be <c>null</c> or empty.</param>
+            <param name="value">The secret itself.</param>
+            <param name="cancellationToken">A token that may cancel this operation.</param>
+            <returns>A task that represents the asynchronous store operation.</returns>
+            <exception cref="T:System.ArgumentNullException">Thrown if <paramref name="name"/> is <c>null</c>.</exception>
+            <exception cref="T:System.ArgumentException">Thrown if <paramref name="name"/> is empty or contains reserved characters that <see cref="M:Microsoft.VisualStudio.Shell.IVsProjectSecrets.GetInvalidCharactersFrom(System.String)"/> would have indicated were disallowed.</exception>
+            <exception cref="T:System.InvalidOperationException">Thrown when integrity rules would be violated by this operation.</exception>
+            <exception cref="T:System.UnauthorizedAccessException">Thrown when the user does not have permission for this operation.</exception>
+            <exception cref="T:System.IO.IOException">Thrown when the operation could not be completed due to some network or I/O failure.</exception>
+        </member>
+        <member name="M:Microsoft.VisualStudio.Shell.IVsProjectSecrets.GetSecretAsync(System.String,System.Threading.CancellationToken)">
+            <summary>
+            Gets the secret with the given name.
+            </summary>
+            <param name="name">The name of the secret whose value should be retrieved. Must not be <c>null</c> or empty.</param>
+            <param name="cancellationToken">A token that may cancel this operation.</param>
+            <returns>The value of the secret.</returns>
+            <exception cref="T:System.ArgumentNullException">Thrown if <paramref name="name"/> is <c>null</c>.</exception>
+            <exception cref="T:System.ArgumentException">Thrown if <paramref name="name"/> is empty.</exception>
+            <exception cref="T:System.Collections.Generic.KeyNotFoundException">Thrown if no secret with the specified <paramref name="name"/> could be found.</exception>
+            <exception cref="T:System.UnauthorizedAccessException">Thrown when the user does not have permission for this operation.</exception>
+            <exception cref="T:System.IO.IOException">Thrown when the operation could not be completed due to some network or I/O failure.</exception>
+        </member>
+        <member name="M:Microsoft.VisualStudio.Shell.IVsProjectSecrets.GetSecretNamesAsync(System.Threading.CancellationToken)">
+            <summary>
+            Gets the names of the stored secrets.
+            </summary>
+            <param name="cancellationToken">A token that may cancel this operation.</param>
+            <returns>The set of secret names.</returns>
+            <exception cref="T:System.UnauthorizedAccessException">Thrown when the user does not have permission for this operation.</exception>
+            <exception cref="T:System.IO.IOException">Thrown when the operation could not be completed due to some network or I/O failure.</exception>
+        </member>
+        <member name="M:Microsoft.VisualStudio.Shell.IVsProjectSecrets.GetSecretsAsync(System.Threading.CancellationToken)">
+            <summary>
+            Gets a complete map of stored secret names and values.
+            </summary>
+            <param name="cancellationToken">A token that may cancel this operation.</param>
+            <returns>A dictionary containing the names and values of all the secrets.</returns>
+            <exception cref="T:System.UnauthorizedAccessException">Thrown when the user does not have permission for this operation.</exception>
+            <exception cref="T:System.IO.IOException">Thrown when the operation could not be completed due to some network or I/O failure.</exception>
+        </member>
+        <member name="M:Microsoft.VisualStudio.Shell.IVsProjectSecrets.RemoveSecretAsync(System.String,System.Threading.CancellationToken)">
+            <summary>
+            Deletes a previously stored secret.
+            </summary>
+            <param name="name">The name of the secret to remove. Must not be <c>null</c> or empty.</param>
+            <param name="cancellationToken">A token that may cancel this operation.</param>
+            <returns>
+            A task that returns a boolean value indicating whether the secret was removed.
+            <c>true</c> if the secret was successfully removed.
+            <c>false</c> if no secret with the specified <paramref name="name"/> was found to remove.
+            </returns>
+            <exception cref="T:System.ArgumentNullException">Thrown if <paramref name="name"/> is <c>null</c>.</exception>
+            <exception cref="T:System.ArgumentException">Thrown if <paramref name="name"/> is empty.</exception>
+            <exception cref="T:System.InvalidOperationException">Thrown when integrity rules would be violated by this operation.</exception>
+            <exception cref="T:System.UnauthorizedAccessException">Thrown when the user does not have permission for this operation.</exception>
+            <exception cref="T:System.IO.IOException">Thrown when the operation could not be completed due to some network or I/O failure.</exception>
+        </member>
+        <member name="P:Microsoft.VisualStudio.Shell.ISccUIClickedEventArgs.ClickedElementPosition">
+            <summary>
+            The rectangle of the UI element that was clicked in screen coordinates.
+            </summary>
+        </member>
+        <member name="T:Microsoft.VisualStudio.Shell.IVsSccChanges">
+            <summary>
+            An interface that is implemented by a Source Control Provider to track the number of pending changes in the currently active repository and user interaction with the displayed information
+            </summary>
+        </member>
+        <member name="M:Microsoft.VisualStudio.Shell.IVsSccChanges.PendingChangesUIClickedAsync(Microsoft.VisualStudio.Shell.ISccUIClickedEventArgs,System.Threading.CancellationToken)">
+            <summary>
+            Clicked handler that is called when the UI that displays pending changes information is clicked
+            </summary>
+            <param name="args">Absolute coordinates of the UI that was clicked</param>
+            <param name="cancellationToken">A cancellation token</param>
+            <returns>
+            A task that completes when the event has been handled. If the task is faulted, the exception will be recorded in the VS activity log.
+            </returns>        
+        </member>
+        <member name="T:Microsoft.VisualStudio.Shell.IVsSccChangesDisplayInformation">
+            <summary>
+            Information about pending changes in the current repository of the active Scc provider
+            </summary>
+        </member>
+        <member name="P:Microsoft.VisualStudio.Shell.IVsSccChangesDisplayInformation.PendingChangeCount">
+            <summary>
+            The total number of pending changes in the current repository
+            </summary>
+        </member>
+        <member name="P:Microsoft.VisualStudio.Shell.IVsSccChangesDisplayInformation.PendingChangeLabel">
+            <summary>
+            The label that temporarily indicates busy status when the number of pending changes is being calculated
+            </summary>
+        </member>
+        <member name="P:Microsoft.VisualStudio.Shell.IVsSccChangesDisplayInformation.PendingChangeDetail">
+            <summary>
+            The detailed information for pending changes in a repository. This could, for example, be displayed as a
+            tooltip on control
+            </summary>
+        </member>
+        <member name="T:Microsoft.VisualStudio.Shell.IVsSccCommitPendingChangesPrompt">
+            <summary>
+            An interface that is implemented by a Source Control Provider to set a message displayed to users
+            to prompt them to commit their pending changes early and often.
+            </summary>
+        </member>
+        <member name="P:Microsoft.VisualStudio.Shell.IVsSccCommitPendingChangesPrompt.CommitPendingChangesPromptMessage">
+            <summary>
+            Prompt message.
+            </summary>
+            <remarks>
+            Implementors of this interface should ensure that this property is localized.
+            </remarks>
+        </member>
+        <member name="T:Microsoft.VisualStudio.Shell.IVsSccCurrentBranch">
+            <summary>
+            An interface that is implemented by a Source Control Provider to track display information and user interaction with the displayed information
+            about the currently active branch in a repository.
+            </summary>
+        </member>
+        <member name="M:Microsoft.VisualStudio.Shell.IVsSccCurrentBranch.BranchUIClickedAsync(Microsoft.VisualStudio.Shell.ISccUIClickedEventArgs,System.Threading.CancellationToken)">
+            <summary>
+            Clicked handler that is called when the UI that displays current branch information in a UI is clicked
+            </summary>
+            <param name="args">Absolute coordinates of the UI that was clicked</param>
+            <param name="cancellationToken">A cancellation token</param>
+            <returns>
+            A task that completes when the event has been handled. If the task is faulted, the exception will be recorded in the VS activity log.
+            </returns>        
+        </member>
+        <member name="T:Microsoft.VisualStudio.Shell.IVsSccCurrentBranchDisplayInformation">
+            <summary>
+            Information about the current branch of the active Scc provider
+            </summary>
+        </member>
+        <member name="P:Microsoft.VisualStudio.Shell.IVsSccCurrentBranchDisplayInformation.BranchName">
+            <summary>
+            The branch name that will be displayed in a UI
+            </summary>
+        </member>
+        <member name="P:Microsoft.VisualStudio.Shell.IVsSccCurrentBranchDisplayInformation.BranchIcon">
+            <summary>
+            The icon to be displayed along with the branch name
+            </summary>
+        </member>
+        <member name="P:Microsoft.VisualStudio.Shell.IVsSccCurrentBranchDisplayInformation.BranchDetail">
+            <summary>
+            The detailed information for a branch. This could, for example, be displayed as a
+            tooltip on control
+            </summary>
+        </member>
+        <member name="T:Microsoft.VisualStudio.Shell.IVsSccCurrentRepository">
+            <summary>
+            An interface that is implemented by a Source Control Provider to track the currently active repository and user interaction with the displayed information
+            </summary>
+        </member>
+        <member name="M:Microsoft.VisualStudio.Shell.IVsSccCurrentRepository.RepositoryUIClickedAsync(Microsoft.VisualStudio.Shell.ISccUIClickedEventArgs,System.Threading.CancellationToken)">
+            <summary>
+            Clicked handler that is called when the UI that displays repository information is clicked
+            </summary>
+            <param name="args">Absolute coordinates of the UI that was clicked</param>
+            <param name="cancellationToken">A cancellation token</param>
+            <returns>
+            A task that completes when the event has been handled. If the task is faulted, the exception will be recorded in the VS activity log.
+            </returns>        
+        </member>
+        <member name="T:Microsoft.VisualStudio.Shell.IVsSccCurrentRepositoryDisplayInformation">
+            <summary>
+            Information about the current repository of the active Scc provider
+            </summary>
+        </member>
+        <member name="P:Microsoft.VisualStudio.Shell.IVsSccCurrentRepositoryDisplayInformation.RepositoryName">
+            <summary>
+            The repository name that will be displayed in a UI
+            </summary>
+        </member>
+        <member name="P:Microsoft.VisualStudio.Shell.IVsSccCurrentRepositoryDisplayInformation.RepositoryIcon">
+            <summary>
+            The icon to be displayed along with the repository name
+            </summary>
+        </member>
+        <member name="P:Microsoft.VisualStudio.Shell.IVsSccCurrentRepositoryDisplayInformation.RepositoryDetail">
+            <summary>
+            The detailed information for a repository. This could, for example, be displayed as a
+            tooltip on control
+            </summary>
+        </member>
+        <member name="T:Microsoft.VisualStudio.Shell.IVsSccPublish">
+            <summary>
+            Interface that supports publishing of source code that is in a local repository
+            </summary>
+        </member>
+        <member name="M:Microsoft.VisualStudio.Shell.IVsSccPublish.BeginPublishWorkflowAsync(System.Threading.CancellationToken)">
+            <summary>
+            Initiates a workflow to enable publishing of a local repository to a remote server.
+            </summary>
+            <param name="cancellationToken">A cancellation token</param>
+            <returns>
+            A task that completes when the event has been handled. If the task is faulted, the exception will be recorded in the VS activity log.
+            </returns>        
+        </member>
+        <member name="T:Microsoft.VisualStudio.Shell.IVsSccSolution">
+            <summary>
+            Interface that raises events related to a loaded solution and Scc 
+            </summary>
+        </member>
+        <member name="E:Microsoft.VisualStudio.Shell.IVsSccSolution.AddedToSourceControl">
+            <summary>
+            Event that is fired when a solution is added to Source Control
+            </summary>
+        </member>
+        <member name="T:Microsoft.VisualStudio.Shell.IVsSccUnpublishedCommits">
+            <summary>
+            An interface that is implemented by a Source Control Provider to track the number of unpublished commits in the active repository and user interaction with the displayed information
+            </summary>
+        </member>
+        <member name="M:Microsoft.VisualStudio.Shell.IVsSccUnpublishedCommits.UnpublishedCommitsUIClickedAsync(Microsoft.VisualStudio.Shell.ISccUIClickedEventArgs,System.Threading.CancellationToken)">
+            <summary>
+            Clicked handler that is called when the UI that displays unpublished commits is clicked
+            </summary>
+            <param name="args">Absolute coordinates of the UI that was clicked</param>
+            <param name="cancellationToken">A cancellation token</param>
+            <returns>
+            A task that completes when the event has been handled. If the task is faulted, the exception will be recorded in the VS activity log.
+            </returns>
+        </member>
+        <member name="E:Microsoft.VisualStudio.Shell.IVsSccUnpublishedCommits.AdvertisePublish">
+            <summary>
+            Event that is raised to request the shell to advertise backing up the repository
+            </summary>
+        </member>
+        <member name="T:Microsoft.VisualStudio.Shell.IVsSccUnpublishedCommitsDisplayInformation">
+            <summary>
+            Information about Unpublished Commits
+            </summary>
+        </member>
+        <member name="P:Microsoft.VisualStudio.Shell.IVsSccUnpublishedCommitsDisplayInformation.UnpublishedCommitCount">
+            <summary>
+            The number of unpublished commits in the current repository
+            </summary>
+        </member>
+        <member name="P:Microsoft.VisualStudio.Shell.IVsSccUnpublishedCommitsDisplayInformation.UnpublishedCommitLabel">
+            <summary>
+            The label that temporarily indicates busy status when the number of pending changes is being calculated
+            </summary>
+        </member>
+        <member name="P:Microsoft.VisualStudio.Shell.IVsSccUnpublishedCommitsDisplayInformation.UnpublishedCommitDetail">
+            <summary>
+            The detailed information for unpublished commits. This could, for example, be displayed as a
+            tooltip on control
+            </summary>
+        </member>
+        <member name="T:Microsoft.VisualStudio.Shell.ServiceBroker.BrokeredServiceFactory">
+            <summary>
+            A delegate that creates new instances of a service to be exposed by an <see cref="T:Microsoft.ServiceHub.Framework.IServiceBroker" />.
+            </summary>
+            <param name="moniker">The identifier for the service that is requested.</param>
+            <param name="options">Additional options that alter how the service may be activated or provide additional data to the service constructor.</param>
+            <param name="serviceBroker">The service broker that the service returned from this delegate should use to obtain any of its own dependencies.</param>
+            <param name="cancellationToken">A token to indicate that the caller has lost interest in the result.</param>
+            <returns>A unique instance of the service. If the value implements <see cref="T:System.IDisposable" />, the value will be disposed when the client disconnects.</returns>
+            <seealso cref="M:Microsoft.VisualStudio.Shell.ServiceBroker.IBrokeredServiceContainer.Proffer(Microsoft.ServiceHub.Framework.ServiceRpcDescriptor,Microsoft.VisualStudio.Shell.ServiceBroker.BrokeredServiceFactory)"/>
+        </member>
+        <member name="T:Microsoft.VisualStudio.Shell.ServiceBroker.AuthorizingBrokeredServiceFactory">
+            <inheritdoc cref="T:Microsoft.VisualStudio.Shell.ServiceBroker.BrokeredServiceFactory"/>
+            <param name="authorizationServiceClient">
+            The authorization service for this brokered service to use.
+            Must be disposed of by the service or the service factory, unless the service factory itself throws an exception.
+            </param>
+            <seealso cref="M:Microsoft.VisualStudio.Shell.ServiceBroker.IBrokeredServiceContainer.Proffer(Microsoft.ServiceHub.Framework.ServiceRpcDescriptor,Microsoft.VisualStudio.Shell.ServiceBroker.AuthorizingBrokeredServiceFactory)"/>
+        </member>
+        <member name="T:Microsoft.VisualStudio.Shell.ServiceBroker.IBrokeredServiceContainer">
+            <summary>
+            Provides a means to proffer services into <see cref="T:Microsoft.ServiceHub.Framework.IServiceBroker"/> and access to the global <see cref="T:Microsoft.ServiceHub.Framework.IServiceBroker"/>.
+            </summary>
+        </member>
+        <member name="M:Microsoft.VisualStudio.Shell.ServiceBroker.IBrokeredServiceContainer.Proffer(Microsoft.ServiceHub.Framework.ServiceRpcDescriptor,Microsoft.VisualStudio.Shell.ServiceBroker.BrokeredServiceFactory)">
+            <summary>
+            Proffers a service for publication via an <see cref="T:Microsoft.ServiceHub.Framework.IServiceBroker"/> associated with this container.
+            </summary>
+            <param name="serviceDescriptor">
+            The descriptor for the service.
+            The <see cref="P:Microsoft.ServiceHub.Framework.ServiceRpcDescriptor.Moniker"/> is used to match service requests to the <paramref name="factory"/>.
+            The <see cref="M:Microsoft.ServiceHub.Framework.ServiceRpcDescriptor.ConstructRpcConnection(System.IO.Pipelines.IDuplexPipe)"/> method is used to convert the service returned by the <paramref name="factory"/> to a pipe when the client prefers that.
+            </param>
+            <param name="factory">The delegate that will create new instances of the service for each client.</param>
+            <returns>A value that can be disposed to remove the proffered service from availability.</returns>
+            <exception cref="T:System.InvalidOperationException">
+            Thrown if this <paramref name="factory"/> has already been proffered.
+            </exception>
+            <exception cref="T:System.ArgumentException">
+            Thrown if no registration can be found for the proffered <see cref="P:Microsoft.ServiceHub.Framework.ServiceRpcDescriptor.Moniker"/>.
+            </exception>
+            <remarks>
+            The service identified by the <see cref="P:Microsoft.ServiceHub.Framework.ServiceRpcDescriptor.Moniker"/> must have been pre-registered
+            with a <see cref="T:Microsoft.VisualStudio.Shell.ServiceBroker.ServiceAudience"/> indicating who should have access to it and whether it might be obtained from a remote machine or user.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.VisualStudio.Shell.ServiceBroker.IBrokeredServiceContainer.Proffer(Microsoft.ServiceHub.Framework.ServiceRpcDescriptor,Microsoft.VisualStudio.Shell.ServiceBroker.AuthorizingBrokeredServiceFactory)">
+            <inheritdoc cref="M:Microsoft.VisualStudio.Shell.ServiceBroker.IBrokeredServiceContainer.Proffer(Microsoft.ServiceHub.Framework.ServiceRpcDescriptor,Microsoft.VisualStudio.Shell.ServiceBroker.BrokeredServiceFactory)"/>
+        </member>
+        <member name="M:Microsoft.VisualStudio.Shell.ServiceBroker.IBrokeredServiceContainer.GetFullAccessServiceBroker">
+            <summary>
+            Gets an <see cref="T:Microsoft.ServiceHub.Framework.IServiceBroker"/> with full access to all services available to this process with local credentials applied by default for all service requests.
+            This should *not* be used within a brokered service, which should instead use the <see cref="T:Microsoft.ServiceHub.Framework.IServiceBroker"/> that is given to its service factory.
+            </summary>
+            <returns>An <see cref="T:Microsoft.ServiceHub.Framework.IServiceBroker"/> instance created for the caller.</returns>
+            <remarks>
+            <para>
+            When a service request is made with an empty set of <see cref="P:Microsoft.ServiceHub.Framework.ServiceActivationOptions.ClientCredentials"/>,
+            local (full) permissions are applied.
+            A service request that includes its own client credentials may effectively "reduce" permission levels for the requested service
+            if the service contains authorization checks. It will not remove a service from availability entirely since the service audience
+            is always to allow all services to be obtained.
+            </para>
+            <para>
+            Callers should use the <see cref="T:Microsoft.ServiceHub.Framework.IServiceBroker"/> they are provided via their <see cref="T:Microsoft.VisualStudio.Shell.ServiceBroker.BrokeredServiceFactory"/> instead of using
+            this method to get an <see cref="T:Microsoft.ServiceHub.Framework.IServiceBroker"/> so that they are secure by default.
+            An exception to this rule is when a service exposed to untrusted users has fully vetted the input for a specific incoming RPC call
+            and wishes to request other services with full trust in order to accomplish something the user would otherwise not have permission to do.
+            This should be done with great care.
+            </para>
+            </remarks>
+        </member>
+        <member name="T:Microsoft.VisualStudio.Shell.ServiceBroker.ServiceAudience">
+            <summary>
+            Identifies various audiences that may want or need to access a service.
+            When used to register a service (e.g. ProvideBrokeredServiceAttribute)
+            it determines whether that service can be accessed locally, remotely and/or by 3rd parties.
+            </summary>
+            <remarks>
+            This enum may also be used as a filter when constructing an <see cref="T:Microsoft.ServiceHub.Framework.IServiceBroker"/>
+            where each flag reduces the set of services available as only services that specify every flag
+            in the filter are available.
+            </remarks>
+        </member>
+        <member name="F:Microsoft.VisualStudio.Shell.ServiceBroker.ServiceAudience.None">
+            <summary>
+            No flags. The service is not available to anyone.
+            When used for a filtered view, it means apply no filters (all services are available).
+            </summary>
+        </member>
+        <member name="F:Microsoft.VisualStudio.Shell.ServiceBroker.ServiceAudience.Process">
+            <summary>
+            Services are available for clients running in the same process (or <see cref="T:System.AppDomain" /> on the .NET Framework).
+            They will not be available from other processes (e.g. ServiceHub services).
+            A brokered service that includes this flag may still be *indirectly* exposed to <see cref="F:Microsoft.VisualStudio.Shell.ServiceBroker.ServiceAudience.LiveShareGuest"/>
+            by way of another brokered service that is exposed to <see cref="F:Microsoft.VisualStudio.Shell.ServiceBroker.ServiceAudience.LiveShareGuest"/> that is proffered from this process.
+            </summary>
+        </member>
+        <member name="F:Microsoft.VisualStudio.Shell.ServiceBroker.ServiceAudience.Local">
+            <summary>
+            The service is available for clients that support this process (e.g. ServiceHub services). These always run on the same machine and user account.
+            It does *not* include processes connected over Live Share or a Visual Studio Online Environment connection, even if these processes are running on the same machine.
+            A brokered service that includes this flag may still be *indirectly* exposed to <see cref="F:Microsoft.VisualStudio.Shell.ServiceBroker.ServiceAudience.LiveShareGuest"/>
+            by way of another brokered service that is exposed to <see cref="F:Microsoft.VisualStudio.Shell.ServiceBroker.ServiceAudience.LiveShareGuest"/> that is proffered from this machine.
+            </summary>
+        </member>
+        <member name="F:Microsoft.VisualStudio.Shell.ServiceBroker.ServiceAudience.RemoteExclusiveClient">
+            <summary>
+            When the service is running on an Visual Studio Online environment it is available to the client.
+            </summary>
+            <remarks>
+            Host services are available for the *one* client running on any machine that is connected remotely using the exclusive
+            owner connection (not the traditional Live Share sharing session).
+            Such a connection is *always* owned by the same owner as the server and thus is considered trusted.
+            </remarks>
+        </member>
+        <member name="F:Microsoft.VisualStudio.Shell.ServiceBroker.ServiceAudience.LiveShareGuest">
+            <summary>
+            When the service is running on a Live Share host it is available for Live Share guests,
+            which may or may not be using the same user account as the host.
+            </summary>
+            <remarks>
+            Host services are available for remote Live Share clients running under *any* user account.
+            Any necessary authorization checks are the responsibility of the service.
+            </remarks>
+        </member>
+        <member name="F:Microsoft.VisualStudio.Shell.ServiceBroker.ServiceAudience.RemoteExclusiveServer">
+            <summary>
+            When the service is running on a client of an Visual Studio Online environment, it is available to the server.
+            </summary>
+            <remarks>
+            Client services are proffered to a server over an exclusive connection that is always operated by the owner at both ends
+            (and is not the traditional Live Share sharing session).
+            A server never has more than one of these connections concurrently.
+            </remarks>
+        </member>
+        <member name="F:Microsoft.VisualStudio.Shell.ServiceBroker.ServiceAudience.AllClientsIncludingGuests">
+            <summary>
+            The service is available for local processes as well as clients of Visual Studio Online environments and all Live Share guests (including untrusted strangers).
+            </summary>
+            <remarks>
+            Host services are available for all clients (owner or guest), whether they are local, remote over Live Share or remote over an exclusive connection.
+            </remarks>
+        </member>
+        <member name="F:Microsoft.VisualStudio.Shell.ServiceBroker.ServiceAudience.PublicSdk">
+            <summary>
+            The service is considered part of the public SDK,
+            and thus is available to 3rd party clients that are only privileged to access public SDK services.
+            This flag should only be specified for public services that have stable APIs.
+            This flag must be combined with other flags to indicate which local and/or remote clients are allowed to request this service.
+            </summary>
+        </member>
+        <member name="T:Microsoft.VisualStudio.Shell.ServiceBroker.SVsBrokeredServiceContainer">
+            <summary>
+            The service ID for the <see cref="T:Microsoft.VisualStudio.Shell.ServiceBroker.IBrokeredServiceContainer">brokered service container</see>.
+            </summary>
+        </member>
+        <member name="T:Microsoft.VisualStudio.Shell.SVsProjectLocalSecrets">
+            <summary>
+            The service ID to query an <see cref="T:System.IServiceProvider"/> for to obtain
+            an implementation of <see cref="T:Microsoft.VisualStudio.Shell.IVsProjectSecrets"/>
+            that stores secrets in a project's secrets.json file,
+            or equivalent file that is never stored in source control and is local
+            to the individual user or machine.
+            </summary>
+        </member>
+    </members>
+</doc>

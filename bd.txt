@@ -1,0 +1,50 @@
+use TrainCenter;
+
+create table Users
+(
+	id int primary key identity(1,1),
+	firstName nvarchar(30),
+	secondName nvarchar(30),
+	mail nvarchar(50),
+	password nvarchar(100),
+	telNumber varchar(20),
+	about nvarchar(1000),
+	image varbinary(MAX),
+	privilege nvarchar(5) default 'user'
+);
+
+create table TrainProgram
+(
+	id int primary key identity(1,1),
+	PersonId int foreign key references Users(id),
+	Text nvarchar(1000),
+	StartTime time,
+	EndTime time
+);
+
+create table Abonements
+(
+	id int primary key identity(1,1),
+	PersonId int foreign key references Users(id),
+	TrainigsNumber int,
+	EndDate date
+);
+
+
+create table Visitings
+(
+	id int primary key identity(1,1),
+	AbonementId int foreign key references Abonements(id),
+	
+	VisitDate date
+);
+
+
+create table Trainings
+(
+	id int primary key identity(1,1),
+	VisitId int foreign key references Visitings(id),
+	Commentary varchar(1000),
+	StartTime time,
+	EndTime time
+);

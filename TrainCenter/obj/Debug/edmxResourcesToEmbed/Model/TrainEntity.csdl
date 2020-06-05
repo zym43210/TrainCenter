@@ -1,0 +1,185 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="TrainCenterModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Abonements">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PersonId" Type="Int32" />
+    <Property Name="TrainigsNumber" Type="Int32" />
+    <Property Name="EndDate" Type="DateTime" Precision="0" />
+    <NavigationProperty Name="Users" Relationship="Self.FK__Abonement__Perso__164452B1" FromRole="Abonements" ToRole="Users" />
+    <NavigationProperty Name="Visitings" Relationship="Self.FK__Visitings__Abone__1920BF5C" FromRole="Abonements" ToRole="Visitings" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="Trainings">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="VisitId" Type="Int32" />
+    <Property Name="Commentary" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+    <Property Name="StartTime" Type="Time" Precision="7" />
+    <Property Name="EndTime" Type="Time" Precision="7" />
+    <NavigationProperty Name="Visitings" Relationship="Self.FK__Trainings__Visit__1BFD2C07" FromRole="Trainings" ToRole="Visitings" />
+  </EntityType>
+  <EntityType Name="TrainProgram">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PersonId" Type="Int32" />
+    <Property Name="Text" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+    <Property Name="StartTime" Type="Time" Precision="7" />
+    <Property Name="EndTime" Type="Time" Precision="7" />
+    <NavigationProperty Name="Users" Relationship="Self.FK__TrainProg__Perso__1367E606" FromRole="TrainProgram" ToRole="Users" />
+  </EntityType>
+  <EntityType Name="Users">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="firstName" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+    <Property Name="secondName" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+    <Property Name="mail" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="password" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="telNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="about" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+    <Property Name="image" Type="Binary" MaxLength="Max" FixedLength="false" />
+    <Property Name="privilege" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Abonements" Relationship="Self.FK__Abonement__Perso__164452B1" FromRole="Users" ToRole="Abonements" />
+    <NavigationProperty Name="TrainProgram" Relationship="Self.FK__TrainProg__Perso__1367E606" FromRole="Users" ToRole="TrainProgram" />
+  </EntityType>
+  <EntityType Name="Visitings">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="AbonementId" Type="Int32" />
+    <Property Name="VisitDate" Type="DateTime" Precision="0" />
+    <NavigationProperty Name="Abonements" Relationship="Self.FK__Visitings__Abone__1920BF5C" FromRole="Visitings" ToRole="Abonements" />
+    <NavigationProperty Name="Trainings" Relationship="Self.FK__Trainings__Visit__1BFD2C07" FromRole="Visitings" ToRole="Trainings" />
+  </EntityType>
+  <Association Name="FK__Abonement__Perso__164452B1">
+    <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+    <End Role="Abonements" Type="Self.Abonements" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Abonements">
+        <PropertyRef Name="PersonId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Visitings__Abone__1920BF5C">
+    <End Role="Abonements" Type="Self.Abonements" Multiplicity="0..1" />
+    <End Role="Visitings" Type="Self.Visitings" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Abonements">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Visitings">
+        <PropertyRef Name="AbonementId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Trainings__Visit__1BFD2C07">
+    <End Role="Visitings" Type="Self.Visitings" Multiplicity="0..1" />
+    <End Role="Trainings" Type="Self.Trainings" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Visitings">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Trainings">
+        <PropertyRef Name="VisitId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__TrainProg__Perso__1367E606">
+    <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+    <End Role="TrainProgram" Type="Self.TrainProgram" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="TrainProgram">
+        <PropertyRef Name="PersonId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="TrainCenterEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Abonements" EntityType="Self.Abonements" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+    <EntitySet Name="Trainings" EntityType="Self.Trainings" />
+    <EntitySet Name="TrainProgram" EntityType="Self.TrainProgram" />
+    <EntitySet Name="Users" EntityType="Self.Users" />
+    <EntitySet Name="Visitings" EntityType="Self.Visitings" />
+    <AssociationSet Name="FK__Abonement__Perso__164452B1" Association="Self.FK__Abonement__Perso__164452B1">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Abonements" EntitySet="Abonements" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Visitings__Abone__1920BF5C" Association="Self.FK__Visitings__Abone__1920BF5C">
+      <End Role="Abonements" EntitySet="Abonements" />
+      <End Role="Visitings" EntitySet="Visitings" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Trainings__Visit__1BFD2C07" Association="Self.FK__Trainings__Visit__1BFD2C07">
+      <End Role="Visitings" EntitySet="Visitings" />
+      <End Role="Trainings" EntitySet="Trainings" />
+    </AssociationSet>
+    <AssociationSet Name="FK__TrainProg__Perso__1367E606" Association="Self.FK__TrainProg__Perso__1367E606">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="TrainProgram" EntitySet="TrainProgram" />
+    </AssociationSet>
+    <FunctionImport Name="sp_alterdiagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="version" Mode="In" Type="Int32" />
+      <Parameter Name="definition" Mode="In" Type="Binary" />
+    </FunctionImport>
+    <FunctionImport Name="sp_creatediagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="version" Mode="In" Type="Int32" />
+      <Parameter Name="definition" Mode="In" Type="Binary" />
+    </FunctionImport>
+    <FunctionImport Name="sp_dropdiagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(TrainCenterModel.sp_helpdiagramdefinition_Result)">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(TrainCenterModel.sp_helpdiagrams_Result)">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_renamediagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="new_diagramname" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_upgraddiagrams" />
+  </EntityContainer>
+  <ComplexType Name="sp_helpdiagramdefinition_Result">
+    <Property Type="Int32" Name="version" Nullable="true" />
+    <Property Type="Binary" Name="definition" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="sp_helpdiagrams_Result">
+    <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
+    <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
+    <Property Type="Int32" Name="ID" Nullable="false" />
+    <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
+    <Property Type="Int32" Name="OwnerID" Nullable="false" />
+  </ComplexType>
+</Schema>
